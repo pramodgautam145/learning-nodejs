@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My HTML File</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+    <script>
+        let socket = null;
+        function initialize() {
+             socket = io(); // Connect to the server using the default URL io.connect
+            socket.on("msg_from_server_peer", dataFromServer => {
+                console.log("Message from server peer: " + dataFromServer);
+            });
+        }
+        function sendMessage(){
+            let dataToBeSent = document.querySelector("#txtMessage").value;
+            console.log(dataToBeSent);
+            socket.emit("msg_from_client_peer", dataToBeSent);
+        }
+    </script>
+</head>
+<body onload="initialize()">
+    <h1>Hello, World!</h1>
+    <p>This is a web socket page.</p>
+<main>
+    <label>
+        Message
+         :
+        <input type="text" id="txtMessage">
+        <input type="button" value="Send" onclick="sendMessage()"/>
+    </label>
+</main>
+</body>
+</html>
